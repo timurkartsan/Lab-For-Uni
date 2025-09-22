@@ -51,3 +51,60 @@ docker compose up -d
 ```
 
 Then access Jupyter at: http://localhost:8888
+
+---
+
+## Звіт про виконання (Report)
+
+Нижче — контрольний список завдання та статус на момент останнього запуску:
+
+- [x] встановити git
+- [x] створити git account (GitHub: timurkartsan)
+- [x] склонувати репозиторій https://github.com/djnzx/iad-practice
+- [x] встановити docker (Docker Desktop)
+- [x] зібрати контейнер jupiter notebook (docker compose build)
+- [x] запустити jupiter notebook (docker compose up -d, порт 8888)
+- [x] запустити код (автоматичне виконання всіх *.ipynb через jupyter nbconvert)
+- [ ] зробити коміт з результатати виконання коду (цей README оновлено; результати знаходяться у папці results/)
+
+Дата/час останнього запуску: UTC 2025-09-22
+
+### Де шукати результати
+
+- Усі згенеровані/оновлені ноутбуки скопійовано до каталогу: results/
+- Вихідні ноутбуки залишаються в iad-practice/practice/ (ці теж виконано in-place всередині контейнера)
+
+### Як повторити виконання коду
+
+1) Запустіть середовище:
+
+```powershell
+# з кореня репозиторію
+docker compose -f "iad-practice/dev-env/docker-compose.yml" up -d --build
+```
+
+2) За бажання — повторно виконати всі ноутбуки без відкриття браузера:
+
+```powershell
+# Шукає всі *.ipynb під iad-practice\practice і запускає їх у контейнері
+$root = "$(Resolve-Path .)\iad-practice\practice";
+$files = Get-ChildItem -LiteralPath $root -Recurse -File -Filter *.ipynb;
+foreach ($f in $files) {
+  $rel = $f.FullName.Substring($root.Length).Replace("\\","/");
+  $p = "/workspace$rel";
+  docker exec dev-env-jupiter-notebook-1 jupyter nbconvert --to notebook --inplace --execute --ExecutePreprocessor.timeout=600 "$p"
+}
+```
+
+3) Скопіювати результати до results/ (вже зроблено мною, але команда для повтору):
+
+```powershell
+New-Item -ItemType Directory -Force -Path "results" | Out-Null
+Copy-Item -Path "iad-practice\practice\*" -Destination "results" -Recurse -Force
+```
+
+4) Закрити середовище за потреби:
+
+```powershell
+docker compose -f "iad-practice/dev-env/docker-compose.yml" down
+```
