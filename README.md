@@ -58,7 +58,6 @@ Then access Jupyter at: http://localhost:8888
 - [x] зібрати контейнер jupiter notebook (docker compose build)
 - [x] запустити jupiter notebook (docker compose up -d, порт 8888)
 - [x] запустити код (автоматичне виконання всіх *.ipynb через jupyter nbconvert)
-- [ ] зробити коміт з результатати виконання коду (цей README оновлено; результати знаходяться у папці results/)
 
 Дата/час останнього запуску: UTC 2025-09-22
 
