@@ -1,12 +1,5 @@
 # Lab For Uni - Setup Instructions
 
-## What's Been Done
-✅ Created dedicated folder on desktop: "Lab For Uni"
-✅ Cloned repository: https://github.com/djnzx/iad-practice
-✅ Git configured with your credentials (timurkartsan / tymur.kartsan@e-u.edu.ua)
-
-## What You Need to Do Next
-
 ### 1. Install Docker Desktop
 - Go to: https://www.docker.com/products/docker-desktop/
 - Download Docker Desktop for Windows
